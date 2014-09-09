@@ -64,7 +64,9 @@ import android.widget.Toast;
     {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder
-		.setMessage("Application requires data connection!")
+		.setCancelable(false)
+		.setMessage("Application requires data connection for operating!")
+		.setTitle("Internet Conenction")
 		.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			
 			@Override
@@ -76,7 +78,6 @@ import android.widget.Toast;
 				startActivity(intent);
 			}
 		});
-		
 		return builder.create();
 		}
     protected void onStart()
