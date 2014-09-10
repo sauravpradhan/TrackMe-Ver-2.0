@@ -18,6 +18,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -29,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 @SuppressLint("ShowToast") public class MainActivity extends Activity implements LocationListener  {
+	Settings_View settings_View;
 	TextView textView1 ; 
 	TextView textView2 = null; 
 	timerImp timer2= new timerImp(this);
@@ -71,7 +73,6 @@ import android.widget.Toast;
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				// TODO Auto-generated method stub
 				Intent intent = new Intent(Intent.ACTION_MAIN);
 				intent.addCategory(Intent.CATEGORY_HOME);
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -124,7 +125,7 @@ import android.widget.Toast;
 	      {
 	    	  return;
 	      }
-        repeat.scheduleAtFixedRate(timer2, 5000, 60000 );
+        repeat.scheduleAtFixedRate(timer2, 5000, 600000 );
         //if network is enabled
     
     }
@@ -156,8 +157,13 @@ import android.widget.Toast;
     }
     //code to respond when options inside settings is selected
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle presses on the action bar items
+        Intent intent;
+		// Handle presses on the action bar items
         switch (item.getItemId()) {
+        case R.id.menu_settings:
+            intent = new Intent(this, Settings_View.class);
+            startActivity(intent);
+        	return true;
             case R.id.menu_share:
                 share_app();
                 return true;
@@ -230,3 +236,4 @@ import android.widget.Toast;
 	
     
 }
+
