@@ -13,36 +13,50 @@ import android.widget.Toast;
 
 public class timerImp extends TimerTask{
 	 SmsManager send_sms_obj = SmsManager.getDefault();
-	 MainActivity location_var;
+	// MainActivity location_var = new MainActivity();
+	 //creating singleton
 
-	  public Activity activity;
-	    public timerImp (Activity act)
-	    {		//used to get the application context from previous class
-	         this.activity = act;
+	  private static timerImp uniqInstance;
+
+	  private timerImp() {
+	  }
+
+	  public static synchronized timerImp getInstance() {
+	    if (uniqInstance == null) {
+	      uniqInstance = new timerImp();
 	    }
+	    return uniqInstance;
+	  }
+	 
+//end	 
+	 public Activity activity;
+	  //  public timerImp (Activity act)
+	  //  {		
+	   //      this.activity = act;
+	  //  }
 	@Override
 	public void run() {
 		//send_sms_obj.sendTextMessage("+917259250682", null, "Just Some Trial msg!", null, null);
-		activity.runOnUiThread(new Runnable() {
-			  public void run() {
+	//	activity.runOnUiThread(new Runnable() {
+			// public void run() {
 				  String SENT = "SMS_SENT";
 				  String DELIVERED = "SMS_DELIVERED";
 				  
-				  PendingIntent sentPI = PendingIntent.getBroadcast(activity.getApplicationContext(), 0,
+				  PendingIntent sentPI = PendingIntent.getBroadcast(MainActivity.context, 0,
 			                new Intent(SENT), 0);
 
-			      PendingIntent deliveredPI = PendingIntent.getBroadcast(activity.getApplicationContext(),
+			      PendingIntent deliveredPI = PendingIntent.getBroadcast(MainActivity.context,
 			                0, new Intent(DELIVERED), 0);
 			   
 			      
 			      //when sms will be sent
-			      	  activity.registerReceiver(new BroadcastReceiver(){
+			      MainActivity.context.registerReceiver(new BroadcastReceiver(){
 			    	  @Override
 			    	  public void onReceive(Context arg0, Intent arg1) {
 			    	  switch (getResultCode())
 			    	  {
 			    	  case Activity.RESULT_OK:
-			    	  Toast.makeText(activity.getApplicationContext(), "SMS sent",
+			    	  Toast.makeText(MainActivity.context, "SMS sent",
 			    	  Toast.LENGTH_SHORT).show();
 			    	  break;
 			    	  }
@@ -50,13 +64,13 @@ public class timerImp extends TimerTask{
 			    	  }, new IntentFilter(SENT));
 			      	  
 			      	 //when sms will be sent
-			      	  activity.registerReceiver(new BroadcastReceiver(){
+			      MainActivity.context.registerReceiver(new BroadcastReceiver(){
 			    	  @Override
 			    	  public void onReceive(Context arg0, Intent arg1) {
 			    	  switch (getResultCode())
 			    	  {
 			    	  case Activity.RESULT_OK:
-			    	  Toast.makeText(activity.getApplicationContext(), "SMS Delivered",
+			    	  Toast.makeText(MainActivity.context, "SMS Delivered",
 			    	  Toast.LENGTH_SHORT).show();
 			    	  break;
 			    	  }
@@ -66,12 +80,13 @@ public class timerImp extends TimerTask{
 
 			      
 				 // send_sms_obj.sendTextMessage("+917259250682", null, MainActivity.final_parsed_location, sentPI, deliveredPI);
-				  Toast.makeText(activity.getApplicationContext(),"Sms sent Fake! Timer Expired!!"+MainActivity.final_parsed_location, Toast.LENGTH_LONG).show();
+			    
+			    
 			  }
-			});
+	//	});
 		//Toast.makeText(activity.getApplicationContext(),"Timer Expired!!", Toast.LENGTH_LONG).show();
 		// TODO Auto-generated method stub
 		
-	}
-
+//	}
 }
+//}

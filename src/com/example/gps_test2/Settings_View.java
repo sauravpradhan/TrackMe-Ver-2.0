@@ -1,25 +1,19 @@
 package com.example.gps_test2;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;
-import android.app.TimePickerDialog;
 import android.content.DialogInterface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 public class Settings_View extends ListActivity
 {
 		TimePicker pickerTime;
-
+		timerImp timer3= timerImp.getInstance();
 		public void onCreate(Bundle icicle)
 		{
 			super.onCreate(icicle);
@@ -32,10 +26,9 @@ public class Settings_View extends ListActivity
 			    String item = (String) getListAdapter().getItem(position);
 			    if(item.equalsIgnoreCase("Set Timers"))
 			    {	
-			    	
 			    	//Toast.makeText(this, "Set Timers", Toast.LENGTH_SHORT).show();
 			    	
-			    	final CharSequence[] items={"10 Mins","20 Mins","30 Mins"};
+			    	final CharSequence[] items={"10 Secs","20 Secs","30 Secs"};
 			    	
 			    	AlertDialog.Builder builder=new AlertDialog.Builder(this);
 			    	builder.setIcon(R.drawable.sms);
@@ -47,21 +40,25 @@ public class Settings_View extends ListActivity
 						public void onClick(DialogInterface dialog, int which) {}
 					});
 			    
-			    	builder.setSingleChoiceItems(items,-1, new DialogInterface.OnClickListener() {
+			    	builder.setSingleChoiceItems(items,0, new DialogInterface.OnClickListener() {
 						
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							// TODO Auto-generated method stub	
 							if("10 Secs".equals(items[which]))
-							{
-							 Toast.makeText(getBaseContext(), "10 Mins Selected", Toast.LENGTH_SHORT).show();
+							{	
+								timer3.cancel();
+								MainActivity.settings_val = 10 * 1000;
+								Toast.makeText(getBaseContext(), "10  Selected", Toast.LENGTH_SHORT).show();
 							}
 							else if("20 Secs".equals(items[which]))
 							{
-								 Toast.makeText(getBaseContext(), "20 Mins Selected", Toast.LENGTH_SHORT).show();
+								MainActivity.settings_val = 10 * 50000;
+								 Toast.makeText(getBaseContext(), "50 secs Selected", Toast.LENGTH_SHORT).show();
 							}
 							else if("30 Secs".equals(items[which]))
 							{
+								MainActivity.settings_val = 10 * 3000;
 								 Toast.makeText(getBaseContext(), "30 Mins Selected", Toast.LENGTH_SHORT).show();
 							}
 							

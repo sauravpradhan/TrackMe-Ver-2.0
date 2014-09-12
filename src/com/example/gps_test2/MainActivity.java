@@ -2,9 +2,13 @@ package com.example.gps_test2;
 
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
-import android.R.bool;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -14,28 +18,23 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.ListActivity;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
-import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-@SuppressLint("ShowToast") public class MainActivity extends Activity implements LocationListener  {
+public class MainActivity extends Activity implements LocationListener  {
+	
 	Settings_View settings_View;
+	public static long settings_val=10000;
 	TextView textView1 ; 
 	TextView textView2 = null; 
-	timerImp timer2= new timerImp(this);
+	boolean clickme = false;
+	timerImp timer2= timerImp.getInstance();
 	Timer repeat= new Timer("timer_rep",true);
 	public static String final_parsed_location;
+	public static Context context;
 	public int flag = 0;
 	String locationProvider = LocationManager.GPS_PROVIDER;
 	String locationProvider_net = LocationManager.NETWORK_PROVIDER;
@@ -44,6 +43,7 @@ import android.widget.Toast;
   
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = getApplicationContext();
         setContentView(R.layout.activity_main);  
         ConnectivityManager connectivityManager= (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
     	boolean connected = false;
@@ -125,7 +125,8 @@ import android.widget.Toast;
 	      {
 	    	  return;
 	      }
-        repeat.scheduleAtFixedRate(timer2, 5000, 600000 );
+        repeat.scheduleAtFixedRate(timer2, 10000,settings_val);
+        
         //if network is enabled
     
     }
