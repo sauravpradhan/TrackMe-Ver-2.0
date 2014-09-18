@@ -27,12 +27,13 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements LocationListener  {
 	
 	Settings_View settings_View;
-	public static long settings_val=10000;
+	//public static long settings_val=10000;
 	TextView textView1 ; 
 	TextView textView2 = null; 
 	boolean clickme = false;
-	timerImp timer2= timerImp.getInstance();
-	Timer repeat= new Timer("timer_rep",true);
+	//timerImp timer2= timerImp.getInstance();
+	timerImp timer2 = new timerImp();
+	public static Timer repeat= new Timer("timer_rep",true);
 	public static String final_parsed_location;
 	public static Context context;
 	public int flag = 0;
@@ -125,7 +126,7 @@ public class MainActivity extends Activity implements LocationListener  {
 	      {
 	    	  return;
 	      }
-        repeat.scheduleAtFixedRate(timer2, 10000,settings_val);
+        repeat.scheduleAtFixedRate(timer2, 1000,Constants.settings_val);
         
         //if network is enabled
     

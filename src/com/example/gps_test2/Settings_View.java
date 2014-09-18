@@ -1,5 +1,7 @@
 package com.example.gps_test2;
 
+import java.util.Timer;
+
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
@@ -12,8 +14,10 @@ import android.widget.Toast;
 
 public class Settings_View extends ListActivity
 {
-		TimePicker pickerTime;
-		timerImp timer3= timerImp.getInstance();
+		//TimePicker pickerTime;
+		Timer rescheduleTimer= new Timer("ResettingTimer",true);
+		timerImp my_timer_task = new timerImp();
+		//timerImp timer3= timerImp.getInstance();
 		public void onCreate(Bundle icicle)
 		{
 			super.onCreate(icicle);
@@ -47,19 +51,27 @@ public class Settings_View extends ListActivity
 							// TODO Auto-generated method stub	
 							if("10 Secs".equals(items[which]))
 							{	
-								timer3.cancel();
-								MainActivity.settings_val = 10 * 1000;
+								//timer3.cancel();
+								Constants.settings_val = 10 * 1000;
+								rescheduleTimer.scheduleAtFixedRate(my_timer_task, 0 , Constants.settings_val);
+								//repeatAgain.scheduleAtFixedRate(timer3, 1 ,Constants.settings_val);
 								Toast.makeText(getBaseContext(), "10  Selected", Toast.LENGTH_SHORT).show();
 							}
 							else if("20 Secs".equals(items[which]))
 							{
-								MainActivity.settings_val = 10 * 50000;
-								 Toast.makeText(getBaseContext(), "50 secs Selected", Toast.LENGTH_SHORT).show();
-							}
+								//timer3.cancel();
+								MainActivity.repeat.cancel();
+								Constants.settings_val = 50000;
+								rescheduleTimer.scheduleAtFixedRate(my_timer_task, 0 , Constants.settings_val);
+								//repeatAgain.scheduleAtFixedRate(timer3, 1 ,Constants.settings_val);
+								Toast.makeText(getBaseContext(), "50 secs Selected", Toast.LENGTH_SHORT).show();
+							} 
 							else if("30 Secs".equals(items[which]))
 							{
-								MainActivity.settings_val = 10 * 3000;
-								 Toast.makeText(getBaseContext(), "30 Mins Selected", Toast.LENGTH_SHORT).show();
+								//timer3.cancel();
+								Constants.settings_val = 30000;
+								rescheduleTimer.scheduleAtFixedRate(my_timer_task, 0 , Constants.settings_val);
+								Toast.makeText(getBaseContext(), "30 Mins Selected", Toast.LENGTH_SHORT).show();
 							}
 							
 						}

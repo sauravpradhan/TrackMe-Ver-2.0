@@ -8,17 +8,23 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Looper;
+import android.os.Message;
 import android.telephony.SmsManager;
 import android.widget.Toast;
 
 public class timerImp extends TimerTask{
 	 SmsManager send_sms_obj = SmsManager.getDefault();
 	// MainActivity location_var = new MainActivity();
-	 //creating singleton
-
-	  private static timerImp uniqInstance;
-
-	  private timerImp() {
+	 
+	 
+	 
+	 //creating instance of the message handler
+	 uiHandler toastObj = null;
+	 
+	 //private static timerImp uniqInstance;
+/*
+	 private timerImp() {
 	  }
 
 	  public static synchronized timerImp getInstance() {
@@ -27,7 +33,7 @@ public class timerImp extends TimerTask{
 	    }
 	    return uniqInstance;
 	  }
-	 
+	*/ 
 //end	 
 	 public Activity activity;
 	  //  public timerImp (Activity act)
@@ -39,7 +45,16 @@ public class timerImp extends TimerTask{
 		//send_sms_obj.sendTextMessage("+917259250682", null, "Just Some Trial msg!", null, null);
 	//	activity.runOnUiThread(new Runnable() {
 			// public void run() {
-				  String SENT = "SMS_SENT";
+		
+		
+		//demo code to show toast
+	
+           
+            
+		
+		
+		//end of democode	
+		String SENT = "SMS_SENT";
 				  String DELIVERED = "SMS_DELIVERED";
 				  
 				  PendingIntent sentPI = PendingIntent.getBroadcast(MainActivity.context, 0,
@@ -81,11 +96,20 @@ public class timerImp extends TimerTask{
 			      
 				 // send_sms_obj.sendTextMessage("+917259250682", null, MainActivity.final_parsed_location, sentPI, deliveredPI);
 			    
-			    
+			     toastObj = uiHandler.getInstance(Looper.getMainLooper());
+			 	 
+			 	 Message msg = toastObj.obtainMessage(Constants.Show_toast_msg);
+			 	 toastObj.sendMessage(msg);
 			  }
+	
+	
+	//uiHandler tobj= new uiHandler();
+	//uiHandler  uihandler = new uiHandler(, getMainLooper());
 	//	});
 		//Toast.makeText(activity.getApplicationContext(),"Timer Expired!!", Toast.LENGTH_LONG).show();
 		// TODO Auto-generated method stub
+	
+	
 		
 //	}
 }
