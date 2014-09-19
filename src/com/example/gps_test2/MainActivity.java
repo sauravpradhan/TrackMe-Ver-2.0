@@ -21,15 +21,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements LocationListener  {
 	
 	Settings_View settings_View;
+	
 	//public static long settings_val=10000;
 	TextView textView1 ; 
 	TextView textView2 = null; 
+	Button button1;
 	boolean clickme = false;
 	//timerImp timer2= timerImp.getInstance();
 	timerImp timer2 = new timerImp();
@@ -45,13 +49,14 @@ public class MainActivity extends Activity implements LocationListener  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getApplicationContext();
-        setContentView(R.layout.activity_main);  
+        setContentView(R.layout.activity_main); 
+        ImageButton button1 = (ImageButton)findViewById(R.id.button1);
         ConnectivityManager connectivityManager= (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
     	boolean connected = false;
     	LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
     	NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         connected = networkInfo != null && networkInfo.isAvailable() && networkInfo.isConnected();
-
+       // button1.setClickable(false);
     	
     	if(!connected)
     	{
@@ -60,7 +65,7 @@ public class MainActivity extends Activity implements LocationListener  {
     		onCreateDialog(savedInstanceState).show();
     		return;
     	}
-    	Log.d("Saurav", "Data connection is available");
+    		Log.d("Saurav", "Data connection is available");
         
     }
     public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -84,6 +89,7 @@ public class MainActivity extends Activity implements LocationListener  {
 		}
     protected void onStart()
     {
+    	//Button button1 = (Button)findViewById(R.id.button1);
     
     	super.onStart();
     	if(flag == 1)
@@ -91,7 +97,7 @@ public class MainActivity extends Activity implements LocationListener  {
     	LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
     	if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
     	{
-    		Toast.makeText(getApplicationContext(), "GPS is Enabled in your devide", Toast.LENGTH_SHORT).show();
+    		Toast.makeText(getApplicationContext(), "GPS is Enabled in your device", Toast.LENGTH_SHORT).show();
     		Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
     	}
     	else if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
@@ -121,7 +127,7 @@ public class MainActivity extends Activity implements LocationListener  {
     		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,this);
     	}
         //task running to send sms every min for now ()
-        //if we not got location changed callback then dont forward the sms
+        //if we not got location changed callback then don't forward the sms
 	      while(location_callback_flag)
 	      {
 	    	  return;
@@ -170,7 +176,7 @@ public class MainActivity extends Activity implements LocationListener  {
                 share_app();
                 return true;
             case R.id.about_app:
-            	Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/coolgopal/TrackMe/blob/master/README.md"));
+            	Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/kodered/TrackMe-Ver-2.0/blob/master/README.md"));
             	startActivity(i); 
             default:
                 return super.onOptionsItemSelected(item);
@@ -182,13 +188,14 @@ public class MainActivity extends Activity implements LocationListener  {
 		Intent intent = new Intent(Intent.ACTION_SEND);
 		intent.setType("text/plain");
 		intent.putExtra(android.content.Intent.EXTRA_TEXT, "Just a location sharing app!" +
-				"\n Find the Github Source at: https://github.com/kodered/TrackMe/");
+				"\n Find the Github Source at: https://github.com/kodered/TrackMe-Ver-2.0");
 		startActivity(intent); 
 		
 	}
 
 	@Override
 	public void onLocationChanged(Location location) {
+		//button1.setClickable(true);
 		location_callback_flag = true;
 		// TODO Auto-generated method stub
 		Geocoder g1= new Geocoder(getApplicationContext());
