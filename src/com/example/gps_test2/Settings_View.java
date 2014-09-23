@@ -14,7 +14,9 @@ import android.widget.Toast;
 public class Settings_View extends ListActivity
 {
 		//TimePicker pickerTime;
-		public static int seletedOption = 0;
+		
+	 	
+		
 		Timer rescheduleTimer= new Timer("ResettingTimer",true);
 		timerImp my_timer_task = new timerImp();
 		//timerImp timer3= timerImp.getInstance();
@@ -23,7 +25,16 @@ public class Settings_View extends ListActivity
 			super.onCreate(icicle);
 			String[] values = new String[] { "Set Timers", "Send Sms?"};
 			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-	        android.R.layout.simple_list_item_1, values);
+	        android.R.layout.simple_list_item_1, values){ 
+	            public boolean isEnabled(int position) 
+	            { 
+		            if(MainActivity.TrackMeStarted == true &&  position == 0)
+		            {
+		                return false;
+		            }
+		            return true;
+	            } 
+			};      
 			setListAdapter(adapter);
 	  }
 		  protected void onListItemClick(ListView l, View v, int position, long id) {
@@ -42,38 +53,38 @@ public class Settings_View extends ListActivity
 						
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							if("10 Mins".equals(items[0]))
+							if(Constants.settings_val == 1000)
 							{	
 								//timer3.cancel();
-								MainActivity.repeat.cancel();
-								MainActivity.repeat.purge();
-								seletedOption = 0;
-								Constants.settings_val = 10 * 1000;
-								rescheduleTimer.scheduleAtFixedRate(my_timer_task, 0 , Constants.settings_val);
+								//MainActivity.repeat.cancel();
+								//MainActivity.repeat.purge();
+								MainActivity.seletedOption = 0;
+								Constants.settings_val = 1000;
+								//rescheduleTimer.scheduleAtFixedRate(my_timer_task, 0 , Constants.settings_val);
 								//repeatAgain.scheduleAtFixedRate(timer3, 1 ,Constants.settings_val);
 								Toast.makeText(getBaseContext(), "10  Selected", Toast.LENGTH_SHORT).show();
 							}
-							else if("30 Mins".equals(items[1]))
+							else if(Constants.settings_val == 1000)
 							{
 								//timer3.cancel();
 								
+								//MainActivity.repeat.cancel();
+								//MainActivity.repeat.purge();
+								MainActivity.seletedOption = 1;
 								MainActivity.repeat.cancel();
-								MainActivity.repeat.purge();
-								seletedOption = 1;
-								MainActivity.repeat.cancel();
-								Constants.settings_val = 50000;
-								rescheduleTimer.scheduleAtFixedRate(my_timer_task, 0 , Constants.settings_val);
+								Constants.settings_val = 3000;
+								//rescheduleTimer.scheduleAtFixedRate(my_timer_task, 0 , Constants.settings_val);
 								//repeatAgain.scheduleAtFixedRate(timer3, 1 ,Constants.settings_val);
 								Toast.makeText(getBaseContext(), "30 secs Selected", Toast.LENGTH_SHORT).show();
 							} 
-							else if("60 Mins".equals(items[2]))
+							else if(Constants.settings_val == 1000)
 							{
 								//timer3.cancel();
-								MainActivity.repeat.cancel();
-								MainActivity.repeat.purge();
-								seletedOption = 2;
-								Constants.settings_val = 30000;
-								rescheduleTimer.scheduleAtFixedRate(my_timer_task, 0 , Constants.settings_val);
+								//MainActivity.repeat.cancel();
+								//MainActivity.repeat.purge();
+								MainActivity.seletedOption = 2;
+								Constants.settings_val = 6000;
+								//rescheduleTimer.scheduleAtFixedRate(my_timer_task, 0 , Constants.settings_val);
 								Toast.makeText(getBaseContext(), "60 Mins Selected", Toast.LENGTH_SHORT).show();
 							}
 							
@@ -81,21 +92,25 @@ public class Settings_View extends ListActivity
 						}
 					});
 			    
-			    	builder.setSingleChoiceItems(items,seletedOption, new DialogInterface.OnClickListener() {
+			    	builder.setSingleChoiceItems(items,MainActivity.seletedOption, new DialogInterface.OnClickListener() {
 						
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							// TODO Auto-generated method stub	
+							
 							if("10 Mins".equals(items[which]))
 							{	
+								Constants.settings_val = 1000;
 								Toast.makeText(getBaseContext(), "10  Mins Touched", Toast.LENGTH_SHORT).show();
 							}
 							else if("30 Mins".equals(items[which]))
 							{
+								Constants.settings_val = 3000;
 								Toast.makeText(getBaseContext(), "30 Mins Touched", Toast.LENGTH_SHORT).show();
 							} 
 							else if("60 Mins".equals(items[which]))
 							{
+								Constants.settings_val = 6000;
 								Toast.makeText(getBaseContext(), "60 Mins Touched", Toast.LENGTH_SHORT).show();
 							}
 							

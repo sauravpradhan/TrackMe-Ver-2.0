@@ -7,4 +7,6 @@
     <string name="share">Share My App</string>
 	 <string name="about">About</string>
 	 <string name="layout">Relative</string>
+	 <string name="send_sms">Sms Interval</string>
+	 <string name="send_sms_summary">Sets interval in minutes to send Sms</string>
 </resources>
